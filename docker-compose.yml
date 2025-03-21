@@ -1,0 +1,66 @@
+services:
+  mariadb:
+    build:
+      context: mariadb/build
+      dockerfile: Dockerfile
+    container_name: mariadb
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
+    networks:
+      - inception
+
+  wordpress:
+    build:
+      context: wordpress/build
+      dockerfile: Dockerfile
+    container_name: wordpress
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    volumes:
+      - ./wordpress/html:/var/www/html
+    networks:
+      - inception
+
+  nginx:
+    build:
+      context: nginx/build
+      dockerfile: Dockerfile
+    container_name: nginx
+    restart: unless-stopped
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+      - ./wordpress/html:/var/www/html
+      - ./nginx/certs:/etc/nginx/certs
+      - ./wordpress/html:/var/www/html
+    networks:
+      - inception
+
+networks:
+  inception:
+    driver: bridge

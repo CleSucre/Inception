@@ -1,0 +1,15 @@
+# IDE
+.idea
+
+# Volumes
+
+/mariadb/data
+
+/nginx/logs
+/nginx/certs
+
+/wordpress/html
+
+# Environment
+
+.env
