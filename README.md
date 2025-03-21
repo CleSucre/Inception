@@ -46,8 +46,11 @@ Still thinking about what to add for the last service, grafana, prometheus, or s
 
 ## How to run
 
-execute the following command:
+Copy the [.env-exemple](.env-exemple) file to `.env` and fill in the variables.
 
+Then run the following command:
 ```bash
 make
 ```
+
+Everything should be up and running automatically.
