@@ -20,7 +20,7 @@ MariaDB is a community-developed, commercially supported fork of the MySQL relat
 
 WordPress is a free and open-source content management system written in PHP and paired with a MySQL or MariaDB database. (MariaDB in this case)
 
-- **Port:** 80
+- **Port:** 9000
 
 ### Redis
 
@@ -40,11 +40,9 @@ FTP is a standard network protocol used for the transfer of computer files betwe
 
 - **Port:** 21
 
-### Certbot
+### ????
 
-Certbot is a free, open-source software tool for automatically using Let's Encrypt certificates on manually-administrated websites to enable HTTPS.
-
-- **Port:** N/A
+Still thinking about what to add for the last service, grafana, prometheus, or something else?
 
 ## How to run
 
