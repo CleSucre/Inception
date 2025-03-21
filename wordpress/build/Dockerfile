@@ -22,6 +22,7 @@ RUN curl -o wordpress.tar.gz -fSL https://wordpress.org/latest.tar.gz \
     && rm wordpress.tar.gz
 
 # Set correct file ownership
+RUN chown -R www-data:www-data /var/tmp/html
 RUN chown -R www-data:www-data /var/www/html
 
 # Entrypoint script
