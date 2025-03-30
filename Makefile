@@ -30,3 +30,4 @@ clean:
 	$(RM) .$(DIRSEP)nginx$(DIRSEP)certs$(DIRSEP)
 	$(RM) .$(DIRSEP)wordpress$(DIRSEP)html$(DIRSEP)
 	$(RM) .$(DIRSEP)mariadb$(DIRSEP)data$(DIRSEP)
+	$(RM) .$(DIRSEP)ftp$(DIRSEP)data$(DIRSEP)

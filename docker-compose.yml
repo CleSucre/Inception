@@ -1,4 +1,7 @@
 services:
+
+################### MANDATORY ###################
+
   mariadb:
     build:
       context: mariadb/build
@@ -36,6 +39,8 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+    ports:
+      - "9000:9000"
     volumes:
       - ./wordpress/html:/var/www/html
     networks:
@@ -51,6 +56,7 @@ services:
       DOMAIN_NAME: ${DOMAIN_NAME}
     depends_on:
       - wordpress
+      - adminer
     ports:
       - "443:443"
     volumes:
@@ -58,6 +64,55 @@ services:
       - ./wordpress/html:/var/www/html
       - ./nginx/certs:/etc/nginx/certs
       - ./wordpress/html:/var/www/html
+    networks:
+      - inception
+
+################### BONUS ###################
+
+  ftp:
+    build:
+      context: ./ftp/build
+      dockerfile: Dockerfile
+    container_name: ftp_server
+    restart: unless-stopped
+    #depends_on:
+    #  - wordpress
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
+    volumes:
+      - ./wordpress/html:/var/www/html
+    environment:
+      FTP_USER: ${FTP_USER}
+      FTP_PASS: ${FTP_PASS}
+      DOMAIN_NAME: ${DOMAIN_NAME}
+    networks:
+      - inception
+
+  adminer:
+    build:
+      context: ./adminer/build
+      dockerfile: Dockerfile
+    container_name: adminer
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+      - wordpress
+    ports:
+      - "8081:8080"
+    networks:
+      - inception
+
+  redis:
+    build:
+      context: ./redis/build
+      dockerfile: Dockerfile
+    container_name: redis
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    ports:
+      - "6379:6379"
     networks:
       - inception
 
