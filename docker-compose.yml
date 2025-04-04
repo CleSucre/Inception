@@ -63,7 +63,6 @@ services:
       - ./nginx/logs:/var/log/nginx
       - ./wordpress/html:/var/www/html
       - ./nginx/certs:/etc/nginx/certs
-      - ./wordpress/html:/var/www/html
     networks:
       - inception
 
@@ -113,6 +112,21 @@ services:
       - mariadb
     ports:
       - "6379:6379"
+    networks:
+      - inception
+
+  cadvisor:
+    build:
+      context: cadvisor/build
+      dockerfile: Dockerfile
+    container_name: cadvisor
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /sys:/sys:ro
+      - /var/run:/var/run:ro
+    ports:
+      - "8082:8080"
     networks:
       - inception
 

@@ -31,3 +31,5 @@ clean:
 	$(RM) .$(DIRSEP)wordpress$(DIRSEP)html$(DIRSEP)
 	$(RM) .$(DIRSEP)mariadb$(DIRSEP)data$(DIRSEP)
 	$(RM) .$(DIRSEP)ftp$(DIRSEP)data$(DIRSEP)
+
+.PHONY: up build dev down clean
