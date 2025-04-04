@@ -68,25 +68,21 @@ services:
 
 ################### BONUS ###################
 
-  ftp:
-    build:
-      context: ./ftp/build
-      dockerfile: Dockerfile
+  ftp-server:
+    image: garethflowers/ftp-server
+    #build:
+    #  context: ftp/build
+    #  dockerfile: Dockerfile
     container_name: ftp_server
-    restart: unless-stopped
-    #depends_on:
-    #  - wordpress
-    ports:
-      - "21:21"
-      - "21000-21010:21000-21010"
-    volumes:
-      - ./wordpress/html:/var/www/html
     environment:
-      FTP_USER: ${FTP_USER}
-      FTP_PASS: ${FTP_PASS}
-      DOMAIN_NAME: ${DOMAIN_NAME}
-    networks:
-      - inception
+      - PUBLIC_IP=0.0.0.0
+      - FTP_PASS=123
+      - FTP_USER=user
+    ports:
+      - "20-21:20-21/tcp"
+      - "40000-40009:40000-40009/tcp"
+    volumes:
+      - ./wordpress/html:/home/user
 
   adminer:
     build:
