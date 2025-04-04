@@ -109,7 +109,7 @@ services:
     depends_on:
       - mariadb
     ports:
-      - "6379:6379"
+      - "6379:6379/tcp"
     networks:
       - inception
 
