@@ -1,39 +1,31 @@
-FROM php:7.4-fpm
+FROM debian:bullseye
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    unzip \
-    curl \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libonig-dev \
-    libzip-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mbstring zip pdo pdo_mysql mysqli \
+LABEL author="CleSucre"
+
+# Install PHP and required extensions
+RUN apt-get update -y && apt-get upgrade -y \
+    && apt-get install -y \
+    php php-fpm php-mysql curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Set temporary work directory
-WORKDIR /var/tmp/html
+# Install WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp
 
-# Download and extract WordPress
-RUN curl -o wordpress.tar.gz -fSL https://wordpress.org/latest.tar.gz \
-    && tar -xvzf wordpress.tar.gz --strip-components=1 \
-    && rm wordpress.tar.gz
+# Copy configuration file
+COPY ./www.conf /etc/php/7.4/fpm/pool.d/
 
-# Set correct file ownership
-RUN chown -R www-data:www-data /var/tmp/html
-RUN chown -R www-data:www-data /var/www/html
+RUN mkdir -p /run/php
+WORKDIR	/var/www/wordpress/
 
-# Entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Setup entrypoint
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh 
 
-# Expose port 9000
+# Expose the port for PHP-FPM
 EXPOSE 9000
 
-# Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+#CMD ["/usr/sbin/php-fpm7.4", "-F"]

@@ -13,11 +13,11 @@ echo "Checking if certificate already exists..."
 if [[ -f "$CERT_FILE" && -f "$KEY_FILE" ]]; then
     echo "Certificate already exists, skipping generation."
 else
-    echo "Attempting to generate SSL certificate for $DOMAIN_NAME and wordpress.$DOMAIN_NAME using certbot..."
+    echo "Attempting to generate SSL certificate for $DOMAIN_NAME, adminer.$DOMAIN_NAME, ftp.$DOMAIN_NAME and cadvisor.$DOMAIN_NAME using certbot..."
 
     certbot certonly --standalone --non-interactive --agree-tos \
         --email "$ADMIN_EMAIL" \
-        -d "$DOMAIN_NAME" -d "wordpress.$DOMAIN_NAME" || {
+        -d "$DOMAIN_NAME" -d "adminer.$DOMAIN_NAME" -d "ftp.$DOMAIN_NAME" -d "cadvisor.$DOMAIN_NAME" || {
 
         echo "Let's Encrypt certificate generation failed. Generating a fallback self-signed certificate."
 
