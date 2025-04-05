@@ -69,10 +69,9 @@ services:
 ################### BONUS ###################
 
   ftp-server:
-    image: garethflowers/ftp-server
-    #build:
-    #  context: ftp/build
-    #  dockerfile: Dockerfile
+    build:
+      context: ftp/build
+      dockerfile: Dockerfile
     container_name: ftp_server
     environment:
       - PUBLIC_IP=0.0.0.0
