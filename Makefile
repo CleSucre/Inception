@@ -1,4 +1,4 @@
-# makefile for docker-compose files
+# Makefile for docker-compose files
 
 ifeq ($(OS), Windows_NT)
 	DIRSEP	= \\
@@ -26,10 +26,10 @@ down:
 
 clean:
 	docker-compose -f $(COMPOSE_FILE) down --volumes --remove-orphans
-	$(RM) .$(DIRSEP)nginx$(DIRSEP)logs$(DIRSEP)
-	$(RM) .$(DIRSEP)nginx$(DIRSEP)certs$(DIRSEP)
-	$(RM) .$(DIRSEP)wordpress$(DIRSEP)html$(DIRSEP)
-	$(RM) .$(DIRSEP)mariadb$(DIRSEP)data$(DIRSEP)
-	$(RM) .$(DIRSEP)ftp$(DIRSEP)data$(DIRSEP)
+	$(RM) .$(DIRSEP)srcs$(DIRSEP)nginx$(DIRSEP)logs$(DIRSEP)
+	$(RM) .$(DIRSEP)srcs$(DIRSEP)nginx$(DIRSEP)certs$(DIRSEP)
+	$(RM) .$(DIRSEP)srcs$(DIRSEP)wordpress$(DIRSEP)html$(DIRSEP)
+	$(RM) .$(DIRSEP)srcs$(DIRSEP)mariadb$(DIRSEP)data$(DIRSEP)
+	$(RM) .$(DIRSEP)srcs$(DIRSEP)ftp$(DIRSEP)data$(DIRSEP)
 
 .PHONY: up build dev down clean

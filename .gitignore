@@ -3,12 +3,12 @@
 
 # Volumes
 
-/mariadb/data
+/srcs/mariadb/data
 
-/nginx/logs
-/nginx/certs
+/srcs/nginx/logs
+/srcs/nginx/certs
 
-/wordpress/html
+/srcs/wordpress/html
 
 # Environment
 

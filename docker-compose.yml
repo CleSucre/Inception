@@ -4,7 +4,7 @@ services:
 
   mariadb:
     build:
-      context: mariadb/build
+      context: srcs/mariadb/build
       dockerfile: Dockerfile
     container_name: mariadb
     restart: unless-stopped
@@ -21,13 +21,13 @@ services:
     ports:
       - "3306:3306/tcp"
     volumes:
-      - ./mariadb/data:/var/lib/mysql
+      - ./srcs/mariadb/data:/var/lib/mysql
     networks:
       - inception
 
   wordpress:
     build:
-      context: wordpress/build
+      context: srcs/wordpress/build
       dockerfile: Dockerfile
     container_name: wordpress
     restart: unless-stopped
@@ -50,13 +50,13 @@ services:
     ports:
       - "9000:9000/tcp"
     volumes:
-      - ./wordpress/html:/var/www/html
+      - ./srcs/wordpress/html:/var/www/html
     networks:
       - inception
 
   nginx:
     build:
-      context: nginx/build
+      context: srcs/nginx/build
       dockerfile: Dockerfile
     container_name: nginx
     restart: unless-stopped
@@ -68,9 +68,9 @@ services:
     ports:
       - "443:443/tcp"
     volumes:
-      - ./nginx/logs:/var/log/nginx
-      - ./wordpress/html:/var/www/html
-      - ./nginx/certs:/etc/nginx/certs
+      - ./srcs/nginx/logs:/var/log/nginx
+      - ./srcs/wordpress/html:/var/www/html
+      - ./srcs/nginx/certs:/etc/nginx/certs
     networks:
       - inception
 
@@ -78,7 +78,7 @@ services:
 
   ftp_server:
     build:
-      context: ftp/build
+      context: srcs/ftp/build
       dockerfile: Dockerfile
     container_name: ftp_server
     environment:
@@ -89,13 +89,13 @@ services:
       - "20-21:20-21/tcp"
       - "40000-40009:40000-40009/tcp"
     volumes:
-      - ./wordpress/html:/home/user
+      - ./srcs/wordpress/html:/home/user
     networks:
       - inception
 
   adminer:
     build:
-      context: ./adminer/build
+      context: srcs/adminer/build
       dockerfile: Dockerfile
     container_name: adminer
     restart: unless-stopped
@@ -109,7 +109,7 @@ services:
 
   redis:
     build:
-      context: ./redis/build
+      context: srcs/redis/build
       dockerfile: Dockerfile
     container_name: redis
     restart: unless-stopped
@@ -122,7 +122,7 @@ services:
 
   cadvisor:
     build:
-      context: cadvisor/build
+      context: srcs/cadvisor/build
       dockerfile: Dockerfile
     container_name: cadvisor
     restart: unless-stopped
