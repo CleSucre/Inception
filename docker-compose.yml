@@ -21,7 +21,7 @@ services:
     ports:
       - "3306:3306/tcp"
     volumes:
-      - ./srcs/mariadb/data:/var/lib/mysql
+      - ./tmp/data/mariadb:/var/lib/mysql
     networks:
       - inception
 
@@ -50,7 +50,7 @@ services:
     ports:
       - "9000:9000/tcp"
     volumes:
-      - ./srcs/wordpress/html:/var/www/html
+      - ./tmp/data/wordpress/html:/var/www/html
     networks:
       - inception
 
@@ -68,9 +68,9 @@ services:
     ports:
       - "443:443/tcp"
     volumes:
-      - ./srcs/nginx/logs:/var/log/nginx
-      - ./srcs/wordpress/html:/var/www/html
-      - ./srcs/nginx/certs:/etc/nginx/certs
+      - ./tmp/data/nginx/logs:/var/log/nginx
+      - ./tmp/data/wordpress/html:/var/www/html
+      - ./tmp/data/nginx/certs:/etc/nginx/certs
     networks:
       - inception
 
@@ -89,7 +89,7 @@ services:
       - "20-21:20-21/tcp"
       - "40000-40009:40000-40009/tcp"
     volumes:
-      - ./srcs/wordpress/html:/home/user
+      - ./tmp/data/wordpress/html:/home/user
     networks:
       - inception
 

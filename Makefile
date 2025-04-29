@@ -26,10 +26,7 @@ down:
 
 clean:
 	docker-compose -f $(COMPOSE_FILE) down --volumes --remove-orphans
-	$(RM) .$(DIRSEP)srcs$(DIRSEP)nginx$(DIRSEP)logs$(DIRSEP)
-	$(RM) .$(DIRSEP)srcs$(DIRSEP)nginx$(DIRSEP)certs$(DIRSEP)
-	$(RM) .$(DIRSEP)srcs$(DIRSEP)wordpress$(DIRSEP)html$(DIRSEP)
-	$(RM) .$(DIRSEP)srcs$(DIRSEP)mariadb$(DIRSEP)data$(DIRSEP)
-	$(RM) .$(DIRSEP)srcs$(DIRSEP)ftp$(DIRSEP)data$(DIRSEP)
+	$(RM) $(DIRSEP)home$(DIRSEP)julthoma
+	$(RM) .$(DIRSEP)tmp
 
 .PHONY: up build dev down clean
