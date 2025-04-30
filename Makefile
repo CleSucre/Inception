@@ -18,6 +18,9 @@ up:
 build:
 	docker-compose -f $(COMPOSE_FILE) build
 
+logs:
+	docker-compose -f $(COMPOSE_FILE) logs -f
+
 dev:
 	docker-compose -f $(COMPOSE_FILE) up --build
 
@@ -29,4 +32,4 @@ clean:
 	$(RM) $(DIRSEP)home$(DIRSEP)julthoma
 	$(RM) .$(DIRSEP)tmp
 
-.PHONY: up build dev down clean
+.PHONY: up build logs dev down clean

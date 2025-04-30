@@ -11,7 +11,7 @@ RUN apk add --no-cache --update \
 COPY vsftpd.conf /etc
 COPY docker-entrypoint.sh /
 
-RUN chmod +x /docker-docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 20/tcp 21/tcp 40000-40009/tcp
 

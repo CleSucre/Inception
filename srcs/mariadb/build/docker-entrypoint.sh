@@ -1,28 +1,15 @@
 #!/bin/bash
 
-set -xe
-
-tail -F /var/log/mysql/mysql.log >/dev/stdout &
-tail -F  /var/log/mysql/error.log >/dev/stderr &
-tail -F  /var/log/mysql/mariadb-slow.log >/dev/stdout &
-
-# customize mariadb conf file in runtime from environment variables
-
-for ENVVAR in $(env | grep -E '^MARIADB_SERVER_CONF_.+')
-do
-  ENVVAR_SECTION=$(echo ${ENVVAR} | cut -d '=' -f2 | cut -d ':' -f 1)
-  ENVVAR_KEY=$(echo ${ENVVAR} | cut -d '=' -f2 | cut -d ':' -f 2)
-  ENVVAR_VALUE=$(echo ${ENVVAR} | cut -d '=' -f2 | cut -d ':' -f 3-)
-  crudini --verbose --set "/etc/mysql/mariadb.conf.d/50-server.cnf" "${ENVVAR_SECTION}" "${ENVVAR_KEY}" "${ENVVAR_VALUE}"
-done
-
-# print mysqld startup defaults for easy check by user of this docker image
-
-mysqld --print-defaults
+set -e
 
 # start mysqld
 
+echo "Starting mysqld"
+
 mysqld_safe &
+
+echo "mysqld is operational"
+
 
 # wait 60 seconds for mysqld to become operational
 

@@ -17,7 +17,7 @@ RUN mkdir -p /run/php
 WORKDIR	/var/www/wordpress/
 
 COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 9000
 
