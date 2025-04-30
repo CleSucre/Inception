@@ -16,7 +16,7 @@ up:
 	docker-compose -f $(COMPOSE_FILE) up -d
 
 build:
-	docker-compose -f $(COMPOSE_FILE) --build
+	docker-compose -f $(COMPOSE_FILE) build
 
 dev:
 	docker-compose -f $(COMPOSE_FILE) up --build
