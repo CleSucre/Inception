@@ -9,10 +9,11 @@ services:
     container_name: mariadb
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 3s
       retries: 3
+      start_period: 5s
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -114,7 +115,8 @@ services:
     container_name: redis
     restart: unless-stopped
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     ports:
       - "6379:6379/tcp"
     networks:
