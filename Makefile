@@ -29,7 +29,6 @@ down:
 
 clean:
 	docker-compose -f $(COMPOSE_FILE) down --volumes --remove-orphans
-	$(RM) $(DIRSEP)home$(DIRSEP)julthoma
-	$(RM) .$(DIRSEP)tmp
+	$(RM) $(DIRSEP)home$(DIRSEP)julthoma$(DIRSEP)tmp
 
 .PHONY: up build logs dev down clean
